@@ -1,12 +1,16 @@
-import fs from "fs-extra";
+import * as fs from "node:fs";
+import * as fsPromises from "node:fs/promises";
+//import fs from "fs-extra";
 import path from "path";
 import open from "open";
 import { fileURLToPath } from "url";
-import "dotenv/config";
+
 import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+process.loadEnvFile(".env");
 
 (async () => {
   // --- Build Development Version ---
@@ -48,30 +52,36 @@ const __dirname = path.dirname(__filename);
     console.log(`Cleaning and initializing test vault at: ${vaultPath}...`);
 
     // Get all items in the vault root
-    const items = await fs.readdir(vaultPath);
+    const items = await fsPromises.readdir(vaultPath);
 
     // Loop through and remove each item, except for the .obsidian directory
     for (const item of items) {
       if (item !== ".obsidian") {
-        await fs.remove(path.join(vaultPath, item));
+        await fsPromises.rm(path.join(vaultPath, item));
       }
     }
 
     // Now, specifically clean the plugins directory inside .obsidian, excluding multi-properties.
     const pluginsPath = path.join(vaultPath, ".obsidian", "plugins");
-    // emptyDir will ensure the directory exists, and then clean it.
-    const plugins = await fs.readdir(pluginsPath);
+    // rm will ensure the directory exists, and then clean it.
+    const plugins = await fsPromises.readdir(pluginsPath);
     for (const plugin of plugins) {
       console.log({ plugin });
       if (plugin !== path.basename(path.dirname(__dirname))) {
-        await fs.emptyDir(path.join(pluginsPath, plugin));
+        await fsPromises.rm(path.join(pluginsPath, plugin), {
+          recursive: true,
+          force: true,
+        });
+        await fsPromises.mkdir(path.join(pluginsPath, plugin), {
+          recursive: true,
+        });
       }
     }
 
     console.log("Cleaned vault root and plugins directory.");
 
     // Copy the contents of test-notes into the vault
-    await fs.copy(sourceDir, vaultPath, { overwrite: true });
+    await fsPromises.cp(sourceDir, vaultPath, { recursive: true });
     console.log("Test notes copied successfully.");
 
     // --- Install Plugin ---

@@ -1,6 +1,6 @@
 /** Modal to hold form that lets user remove props from selection. */
 
-import { Modal, App, Notice } from "obsidian";
+import { Modal, App } from "obsidian";
 import { mount } from "svelte";
 import AddConfirmForm from "./AddConfirmForm.svelte";
 import type { NewPropData } from "./main";
@@ -11,7 +11,7 @@ export class AddConfirmModal extends Modal {
   props: Map<string, NewPropData>;
   submission: () => Promise<void>;
   alterProp: MultiPropSettings["alterProp"];
-  component: any;
+  component: ReturnType<typeof mount>;
 
   constructor(
     app: App,

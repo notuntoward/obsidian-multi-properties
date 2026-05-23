@@ -10,7 +10,7 @@ export class RemoveModal extends Modal {
   names: string[];
   props: string[];
   submission: (customProps: string[]) => Promise<void>;
-  component: any;
+  component: ReturnType<typeof mount>;
 
   constructor(
     app: App,

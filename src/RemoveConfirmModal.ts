@@ -8,7 +8,7 @@ import RemoveConfirmForm from "./RemoveConfirmForm.svelte";
 export class RemoveConfirmModal extends Modal {
   names: string[];
   submission: () => Promise<void>;
-  component: any;
+  component: ReturnType<typeof mount>;
 
   constructor(app: App, names: string[], submission: () => Promise<void>) {
     super(app);

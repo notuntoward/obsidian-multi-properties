@@ -10,7 +10,7 @@
     submission: (props: Map<string, NewPropData>) => void;
     alterProp: MultiPropSettings["alterProp"];
     delimiter: string;
-    defaultProps: { name: string; value: any; type: PropertyTypes }[];
+    defaultProps: { name: string; value: string; type: PropertyTypes }[];
     changeSetting: (setting: MultiPropSettings["alterProp"]) => void;
     suggestedProps: Property[];
   }
@@ -34,10 +34,10 @@
     totalInputs: number;
     typeDef: PropertyTypes;
     nameDef: string;
-    valueDef: any;
+    valueDef: string;
   }[] = $state([]);
 
-  function onDropdownChange(newSetting: any) {
+  function onDropdownChange(newSetting: MultiPropSettings["alterProp"]) {
     changeSetting(newSetting);
   }
 
@@ -49,7 +49,7 @@
 
   /** Add new input to inputEls */
   function addInputs(
-    inputs: { type: PropertyTypes; name: string; value: any }[] = [
+    inputs: { type: PropertyTypes; name: string; value: string }[] = [
       { type: "text", name: "", value: "" },
     ]
   ) {

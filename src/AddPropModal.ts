@@ -8,21 +8,21 @@ import type { MultiPropSettings } from "./SettingTab";
 
 /** Loads a modal and handles form submissions. */
 export class PropModal extends Modal {
-  submission: (customProps: Map<string, any>) => Promise<void>;
+  submission: (customProps: Map<string, NewPropData>) => Promise<void>;
   props: Map<string, NewPropData>;
   alterProp: MultiPropSettings["alterProp"];
   delimiter: string;
-  defaultProps: { name: string; value: any; type: PropertyTypes }[];
+  defaultProps: { name: string; value: string; type: PropertyTypes }[];
   changeSetting: (value: MultiPropSettings["alterProp"]) => void;
-  component: any;
+  component: ReturnType<typeof mount>;
   suggestedProps: Property[];
 
   constructor(
     app: App,
-    submission: (customProps: Map<string, any>) => Promise<void>,
+    submission: (customProps: Map<string, NewPropData>) => Promise<void>,
     alterProp: MultiPropSettings["alterProp"],
     delimiter: string,
-    defaultProps: { name: string; value: any; type: PropertyTypes }[],
+    defaultProps: { name: string; value: string; type: PropertyTypes }[],
     changeSetting: (value: MultiPropSettings["alterProp"]) => void,
     suggestedProps: Property[]
   ) {

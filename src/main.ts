@@ -481,7 +481,7 @@ export default class MultiPropPlugin extends Plugin {
       );
 
       if (count === totalFiles) {
-        setTimeout(() => {
+        activeWindow.setTimeout(() => {
           statusBarItem.remove();
         }, 5000);
       }
@@ -505,7 +505,7 @@ export default class MultiPropPlugin extends Plugin {
       );
 
       if (count === totalFiles) {
-        setTimeout(() => {
+        activeWindow.setTimeout(() => {
           statusBarItem.remove();
         }, 5000);
       }

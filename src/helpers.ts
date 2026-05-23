@@ -19,8 +19,8 @@ export function removeExtraCommas(str: string): string {
 export function cleanTags(str: string) {
   //Taken from https://github.com/Gorkycreator/obsidian-quick-tagger/
   let cleanStr = str;
-  for (let index in KNOWN_BAD_CHARACTERS) {
-    cleanStr = cleanStr.replaceAll(KNOWN_BAD_CHARACTERS[index], "");
+  for (let i = 0; i < KNOWN_BAD_CHARACTERS.length; i++) {
+    cleanStr = cleanStr.replaceAll(KNOWN_BAD_CHARACTERS[i], "");
   }
   return cleanStr;
 }
